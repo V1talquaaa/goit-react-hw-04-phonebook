@@ -1,0 +1,18 @@
+ul {
+    list-style: none;
+    padding: 0;
+}
+.contactList {
+display: flex;
+align-items: baseline;
+}
+
+.deleteBtn {
+    padding: 5px;
+    display: block;
+    margin-top: 0;
+    margin-left: 10px;
+    height: 20px;
+    width: 60px;
+    cursor: pointer;
+}
