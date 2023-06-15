@@ -1,29 +1,33 @@
 import { nanoid } from 'nanoid';
-import { Component } from 'react';
+import { useState } from 'react';
 import './Form.module.css'
 import PropTypes from 'prop-types';
 
 
-class Form extends Component {
+const Form = ({onSubmitContact}) => {
 
-  state = {
-    name: "",
-    number: "",
+  const [name, setName] = useState('')
+  const [number, setNumber] = useState('')
+
+
+ const onChange = ({target: {name, value}}) => {
+    if(name === 'name') {
+      setName(value)
+    } else if(name === 'number') {
+      setNumber(value)
+    }
+
   }
 
-  onChange = ({target: {name, value}}) => {
-    this.setState({[name]: value});
-  }
-
-onSubmit = (e) => {
+const onSubmit = (e) => {
   e.preventDefault();
-  this.props.onSubmitContact({name:this.state.name, number:this.state.number})
-  this.setState({name: '', number: ''})
+  onSubmitContact({name:name, number:number})
+  setName('')
+  setNumber('')
 }
-  
-  render() {
+
     return (
-      <form action="" onSubmit={this.onSubmit}>
+      <form action="" onSubmit={onSubmit}>
         <label htmlFor={nanoid()}>Name</label>
         <input
           type="text"
@@ -32,8 +36,8 @@ onSubmit = (e) => {
           pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
           title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
           required
-          onChange={this.onChange}
-          value={this.state.name}
+          onChange={onChange}
+          value={name}
         />
         <label htmlFor={nanoid()}>Number</label>
         <input
@@ -42,8 +46,8 @@ onSubmit = (e) => {
           pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
           title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
           required
-          onChange={this.onChange}
-          value={this.state.number}
+          onChange={onChange}
+          value={number}
         />
   
         <button type='submit'>
@@ -53,13 +57,13 @@ onSubmit = (e) => {
     );
   };
   
-}
 
 Form.propTypes = {
   onSubmitContact: PropTypes.func.isRequired,
 }
 
 export { Form };
+
 
 
 
